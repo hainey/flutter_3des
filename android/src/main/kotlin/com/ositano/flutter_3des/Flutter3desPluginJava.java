@@ -48,12 +48,16 @@ public class Flutter3desPluginJava {
         if(data == null || iv == null)
             return null;
         try{
-
+            //fixed wrong key size problem of DESedeKeySpec
+            byte[] tripleDesKeyData = new byte[24]; 
             byte[] keyByteArray = hexStringToByteArray(key);
+            for(int i = 0; i < keyByteArra.length; i++) {
+                    tripleDesKeyData[i] = keyByteArra[i];
+            }            
             byte[] ivByteArray = hexStringToByteArray(iv);
             byte[] dataByteArray = hexStringToByteArray(data);
 
-            DESedeKeySpec dks = new DESedeKeySpec(keyByteArray);
+            DESedeKeySpec dks = new DESedeKeySpec(tripleDesKeyData);
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(KEY_INSTANCE);
             Key secretKey = keyFactory.generateSecret(dks);
             Cipher cipher = Cipher.getInstance(ALGORITHM_3DES);
