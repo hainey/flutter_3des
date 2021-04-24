@@ -51,6 +51,7 @@ public class Flutter3desPluginJava {
 
             byte[] keyByteArray = hexStringToByteArray(key);
             byte[] ivByteArray = hexStringToByteArray(iv);
+            byte[] dataByteArray = hexStringToByteArray(data);
 
             DESedeKeySpec dks = new DESedeKeySpec(keyByteArray);
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(KEY_INSTANCE);
@@ -59,7 +60,7 @@ public class Flutter3desPluginJava {
 
             AlgorithmParameterSpec paramSpec = new IvParameterSpec(ivByteArray);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey,paramSpec);
-            return cipher.doFinal(data.getBytes());
+            return cipher.doFinal(dataByteArray); //data.getBytes()
         }catch(Exception e){
             e.printStackTrace();
             return null;
